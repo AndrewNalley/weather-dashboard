@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <title>Weather</title>
 </head>
 <body class="container">
@@ -24,8 +25,16 @@
               <input type="submit" value="Submit">
             </form> 
         </span>
-        <span id="current"></span>
-        <span id="future"></span>
+        <span id="current">
+            <div id="current-day"></div>
+        </span>
+        <span id="future">
+            <div id="day-1"></div>
+            <div id="day-2"></div>
+            <div id="day-3"></div>
+            <div id="day-4"></div>
+            <div id="day-5"></div>
+        </span>
     </main>
     <script src="/assets/js/script.js"></script>
 </body>
