@@ -54,11 +54,11 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 
 ## Credits
 
-List your collaborators, if any, with links to their GitHub profiles.
+API that converts City and country to coordinates:
+https://api-ninjas.com/api/geocoding
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
+Forms: 
+https://www.w3schools.com/html/html_forms.asp
 
 ## License
 

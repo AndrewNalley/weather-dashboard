@@ -11,7 +11,19 @@
 <body class="container">
     <header class="title bg-blue-700 text-white text-5xl h-20 text-center p-3">Weather Dashboard</header>
     <main class="container">
-        <span id="search"></span>
+        <span id="search">
+            <h2>Enter a location</h2>
+
+            <form>
+              <label for="city">City:</label><br>
+              <input type="text" id="city" name="city" value=""><br>
+              <label for="state">State:</label><br>
+              <input type="text" id="state" name="state" value=""><br>
+              <label for="country">Country:</label><br>
+              <input type="text" id="country" name="country" value=""><br>
+              <input type="submit" value="Submit">
+            </form> 
+        </span>
         <span id="current"></span>
         <span id="future"></span>
     </main>
