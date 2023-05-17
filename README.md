@@ -54,6 +54,9 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 
 ## Credits
 
+Weather API: 
+https://openweathermap.org/current#geo
+
 API that converts City and country to coordinates:
 https://api-ninjas.com/api/geocoding
 
