@@ -14,7 +14,7 @@
 
 <body class="container">
     <header class="title bg-info text-white text-center p-3">Weather Dashboard</header>
-    <main id="city" class="container">
+    <main id="main-container" class="container">
         <div class="row">
             <div class="col-lg-4">
                 <aside id="search">
@@ -26,13 +26,13 @@
                         <input type="text" id="state" name="state" value=""><br>
                         <label for="country">Country:</label><br>
                         <input type="text" id="country" name="country" value=""><br>
-                        <input type="submit" value="Submit">
+                        <input type="submit" id="submitButton" value="Submit">
                     </form>
                 </aside>
             </div>
             <div class="col-lg-8">
-               <!-- <span id="current">
-                    <div id="current-day" class="card" style="width: 18rem;">
+               <div id="current-day"></div>
+                  <!--   <div id="current-day" class="card" style="width: 18rem;">
                         <h5 class="card-title text-center">Today's Weather</h5>
                         <img class="card-img-top" src="..." alt="Weather Card icon">
                         <div class="card-body">
