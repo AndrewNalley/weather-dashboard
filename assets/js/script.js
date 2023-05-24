@@ -3,36 +3,21 @@ var apiNinjaKey = 'c6zYH9j97tY8e4IyXXNHfA==TrC4jZ68YEo2FrrD'
 var search = document.querySelector('#search')
 var current = document.querySelector('#current')
 var future = document.querySelector('#future')
-var allDaysArray = [
-    document.querySelector('#current-day'),
-    document.querySelector('#day-1'),
-    document.querySelector('#day-2'),
-    document.querySelector('#day-3'),
-    document.querySelector('#day-4'),
-    document.querySelector('#day-5')
-]
+var currentDay = document.querySelector('#current-day')
+var day1 = document.querySelector('#day-1')
+var day2 = document.querySelector('#day-2')
+var day3 = document.querySelector('#day-3')
+var day4 = document.querySelector('#day-4')
+var day5 = document.querySelector('#day-5')
+
+var allDaysArray = [currentDay, day1, day2, day3, day4, day5]
 
 // display search results
 function createCards() {
-    var displayCity = document.createElement('h1')
-    var displayIcon = document.createElement('img')
-    var displayTemp = document.createElement('li')
-    var displayFeelsLike = document.createElement('li')
-    var displayHumidity = document.createElement('li')
-    var displayWindSpeed = document.createElement('li')
-    var displayWindDir = document.createElement('li')
-    // set content
-    displayCity.textContent = "City Name";
-    displayIcon.src = "path/to/weather-icon.png";
-    displayTemp.textContent = "Temperature: 25°C";
-    displayFeelsLike.textContent = "Feels like: 28°C";
-    displayHumidity.textContent = "Humidity: 75%";
-    displayWindSpeed.textContent = "Wind Speed: 10 mph";
-    displayWindDir.textContent = "Wind Direction: N";
-    // append to page
+// append to page
     allDaysArray.forEach(function (day) {
         var card = document.createElement('div');
-        card.id = "current-day";
+        card.id = day;
         card.classList.add('card');
         card.style.width = "18rem";
 
@@ -42,8 +27,8 @@ function createCards() {
 
         var cardImg = document.createElement('img');
         cardImg.classList.add('card-img-top');
-        cardImg.src = "path/to/weather-card-icon.png";
-        cardImg.alt = "Weather Card icon";
+        //cardImg.src = 'https://openweathermap.org/img/wn/'+weatherIcon+'@2x.png';
+        //cardImg.alt = "Weather Card icon";
 
         var cardBody = document.createElement('div');
         cardBody.classList.add('card-body');
@@ -107,18 +92,26 @@ function getWeather(lat, lon) {
                     data.list[5]
                 ]
                 var weatherDataArray = []; // Array to store the created arrays
-    
+               // var weatherDate;
+                var weatherIcon;
+                var temp;
+                var tempFeelsLike;
+                var humidity;
+                var windSpeed;
+                var windDirection;
+
                 daysData.forEach(function(dayData) {
-                  var weatherDate = dayjs.unix(dayData.dt)
-                  var weatherIcon = dayData.weather[0].icon;
-                  var temp = dayData.main.temp;
-                  var tempFeelsLike = dayData.main.feels_like;
-                  var humidity = dayData.main.humidity;
-                  var windSpeed = dayData.wind.speed;
-                  var windDirection = dayData.wind.deg;
+                   weatherDate = dayjs.unix(dayData.dt)
+                  // weatherIcon = dayData.weather[0].icon;
+                   temp = dayData.main.temp;
+                   tempFeelsLike = dayData.main.feels_like;
+                   humidity = dayData.main.humidity;
+                   windSpeed = dayData.wind.speed;
+                   windDirection = dayData.wind.deg;
                   
                   var dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection];
                   weatherDataArray.push(dayArray);
+                  console.log(dayArray)
                 });
                 
                 console.log(cityName, weatherDate, weatherDataArray);
@@ -158,22 +151,21 @@ function userSearch(city, state, country) {
         })
         // use getWeather function with the result
         .then(result => {
-            if (result.length > 0) {
+            if (result.length >= 0) {
                 var location = result[0]
                 var lat = location.latitude
                 var lon = location.longitude
                 console.log(location);
+                getWeather(lat, lon);
             } else {
                 console.log("No location found in response.")
             }
-            getWeather(lat, lon);
         })
         .catch(error => console.error('Error: ', error));
 }
 
-var locationForm = document.getElementById('locationForm');
-
-locationForm.addEventListener('submit', function (event) {
+var submitButton = document.getElementById('submitButton');
+submitButton.addEventListener('click', function (event) {
     event.preventDefault();
 
     var city = document.getElementById('city').value;
@@ -181,6 +173,6 @@ locationForm.addEventListener('submit', function (event) {
     var country = document.getElementById('country').value;
     console.log('Submitted data:', city, state, country);
 
-    userSearch(city, state, country)
+    userSearch(city, state, country);
 
 });
