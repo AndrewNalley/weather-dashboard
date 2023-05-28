@@ -13,8 +13,9 @@ var day5 = document.querySelector('#day-5')
 var allDaysArray = [currentDay, day1, day2, day3, day4, day5]
 
 // display search results
-function createCards() {
-// append to page
+function createCard(arr) {
+    // dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection]
+    // append to page
     allDaysArray.forEach(function (day) {
         var card = document.createElement('div');
         card.id = day;
@@ -42,11 +43,12 @@ function createCards() {
         listGroup.classList.add('list-group', 'list-group-flush');
 
         var listItems = [
-            "Temperature:",
-            "Feels like:",
-            "Humidity:",
-            "Wind Speed:",
-            "Wind Direction:"
+            // arr.
+            "Temperature:" + arr[0],
+            "Feels like:"  + arr[1],
+            "Humidity:" + arr[2],
+            "Wind Speed:" + arr[3],
+            "Wind Direction:" + arr[4]
         ];
 
         listItems.forEach(function (itemText) {
@@ -91,8 +93,8 @@ function getWeather(lat, lon) {
                     data.list[4],
                     data.list[5]
                 ]
-                var weatherDataArray = []; // Array to store the created arrays
-               // var weatherDate;
+                var dayArray = []; // Array to store the created arrays
+                // var weatherDate;
                 var weatherIcon;
                 var temp;
                 var tempFeelsLike;
@@ -100,21 +102,19 @@ function getWeather(lat, lon) {
                 var windSpeed;
                 var windDirection;
 
-                daysData.forEach(function(dayData) {
-                   weatherDate = dayjs.unix(dayData.dt)
-                  // weatherIcon = dayData.weather[0].icon;
-                   temp = dayData.main.temp;
-                   tempFeelsLike = dayData.main.feels_like;
-                   humidity = dayData.main.humidity;
-                   windSpeed = dayData.wind.speed;
-                   windDirection = dayData.wind.deg;
-                  
-                  var dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection];
-                  weatherDataArray.push(dayArray);
-                  console.log(dayArray)
+                daysData.forEach(function (dayData) {
+                    weatherDate = dayjs.unix(dayData.dt)
+                    // weatherIcon = dayData.weather[0].icon;
+                    temp = dayData.main.temp;
+                    tempFeelsLike = dayData.main.feels_like;
+                    humidity = dayData.main.humidity;
+                    windSpeed = dayData.wind.speed;
+                    windDirection = dayData.wind.deg;
+
+                    dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection];
+                    console.log(dayArray)
+                    createCard(dayArray)
                 });
-                
-                console.log(cityName, weatherDate, weatherDataArray);
             } else {
                 console.log("No city found")
             }
@@ -122,7 +122,6 @@ function getWeather(lat, lon) {
             // needs city name, date, weather condition icon, temp, humidity, wind speed
             // Current, 5-day future
             //search history (logged in local)
-            createCards()
         })
         .catch((error) => console.log('Error: ', error));
 }
