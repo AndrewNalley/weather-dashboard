@@ -10,6 +10,7 @@ var day3 = document.querySelector('#day-3')
 var day4 = document.querySelector('#day-4')
 var day5 = document.querySelector('#day-5')
 cityName = document.querySelector('#city-name')
+var daysElements = [currentDay, day1, day2, day3, day4, day5]
 
 // display search results
 
@@ -30,12 +31,12 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 var cityName = '';
                 cityName.textContent = data.city.name;
                 var daysData = [
-                    currentDayData = data.list[0],
-                    day1Data = data.list[1],
-                    day2Data = data.list[2],
-                    day3Data = data.list[3],
-                    day4Data = data.list[4],
-                    day5Data = data.list[5]
+                    data.list[0],
+                    data.list[1],
+                    data.list[2],
+                    data.list[3],
+                    data.list[4],
+                    data.list[5]
                 ];
 
                 var weatherIcon;
@@ -44,7 +45,6 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 var humidity;
                 var windSpeed;
                 var windDirection;
-                var daysElements = [currentDay, day1, day2, day3, day4, day5]; // Array of day elements
 
                 daysData.forEach(function (dayData, index) {
                     weatherDate = dayjs.unix(dayData.dt);
