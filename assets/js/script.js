@@ -46,8 +46,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 var weatherDate;
                 var weatherIcon;
                 var weatherDescription;
-                var temp;
-                var tempFeelsLike;
+                var tempC;
+                var tempF;
+                var tempFeelsLikeC;
+                var tempFeelsLikeF;
                 var humidity;
                 var windSpeed;
 
@@ -55,8 +57,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     weatherDate = dayjs.unix(dayData.dt).format('MMM-D')
                     weatherIcon = dayData.weather[0].icon
                     weatherDescription = dayData.weather[0].description
-                    temp = dayData.main.temp - 273.15;
-                    tempFeelsLike = dayData.main.feels_like - 273.15;
+                    tempC = dayData.main.temp - 273.15;
+                    tempF = (tempC * 9/5) + 32;
+                    tempFeelsLikeC = dayData.main.feels_like - 273.15;
+                    tempFeelsLikeF = (tempFeelsLikeC * 9/5) + 32;
                     humidity = dayData.main.humidity;
                     windSpeed = dayData.wind.speed;
 
@@ -86,10 +90,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     listGroup.classList.add('list-group', 'list-group-flush');
 
                     var listItems = [
-                        "Temperature: " + temp.toFixed(1) + " C°",
-                        "Feels like: " + tempFeelsLike.toFixed(1) + " C°",
+                        "Temp: " + tempC.toFixed(1) + " C°, or " + tempF.toFixed(0) + " F°",
+                        "Feels like: " + tempFeelsLikeC.toFixed(1) + " C°, or " + tempFeelsLikeF.toFixed(0) + " F°",
                         "Humidity: " + humidity + "%",
-                        "Wind Speed: " + windSpeed + " km/h"
+                        "Wind Speed: " + windSpeed.toFixed(0) + " kph, or " + (windSpeed / 1.609).toFixed(0) + " mph"
                     ];
 
                     listItems.forEach(function (itemText) {
