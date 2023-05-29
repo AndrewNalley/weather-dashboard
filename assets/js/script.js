@@ -1,5 +1,7 @@
 var weatherKey = '68b05ab1b6a722d634f4eaf83ad459db'
 var apiNinjaKey = 'c6zYH9j97tY8e4IyXXNHfA==TrC4jZ68YEo2FrrD'
+var cardContainer = document.querySelector('#card-container')
+var currentLocation = document.querySelector('#current-location')
 var search = document.querySelector('#search')
 var current = document.querySelector('#current')
 var future = document.querySelector('#future')
@@ -28,8 +30,11 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
         .then(data => {
             if (data) {
                 console.log(data);
-                var cityName = '';
+                var cityName = document.createElement('h1');
                 cityName.textContent = data.city.name;
+                currentLocation.innerHTML = ''
+                currentLocation.appendChild(cityName)
+
                 var daysData = [
                     data.list[0],
                     data.list[8],
@@ -40,13 +45,16 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 ];
                 var weatherDate;
                 var weatherIcon;
+                var weatherDescription;
                 var temp;
                 var tempFeelsLike;
                 var humidity;
                 var windSpeed;
 
                 daysData.forEach(function (dayData, index) {
-                    weatherDate = dayjs.unix(dayData.dt).format('MM-DD')
+                    weatherDate = dayjs.unix(dayData.dt).format('MMM-D')
+                    weatherIcon = dayData.weather[0].icon
+                    weatherDescription = dayData.weather[0].description
                     temp = dayData.main.temp - 273.15;
                     tempFeelsLike = dayData.main.feels_like - 273.15;
                     humidity = dayData.main.humidity;
@@ -61,7 +69,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     cardTitle.textContent = weatherDate;
 
                     var cardImg = document.createElement('img');
-                    cardImg.classList.add('card-img-top');
+                    cardImg.setAttribute('src', 'https://openweathermap.org/img/wn/' + weatherIcon + '@2x.png')
+                    cardImg.classList.add('card-img-top', 'center-image');
+                    cardImg.style.width = '50%';
+                    cardImg.style.height = 'auto';
 
                     var cardBody = document.createElement('div');
                     cardBody.classList.add('card-body');
@@ -69,7 +80,7 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     var cardText = document.createElement('p');
                     cardText.id = "weather-description";
                     cardText.classList.add('card-text');
-                    cardText.textContent = "Some quick example text to build on the card title and make up the bulk of the card's content.";
+                    cardText.textContent = weatherDescription.toUpperCase();
 
                     var listGroup = document.createElement('ul');
                     listGroup.classList.add('list-group', 'list-group-flush');
@@ -98,7 +109,7 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     daysElements[index].appendChild(card); // Append the card to the day element
                 });
             } else {
-                console.log("No city found");
+                currentLocation.innerHTML = 'No city found';
             }
         })
         .catch((error) => console.log('Error: ', error));
@@ -126,6 +137,7 @@ function userSearch(city, state, country) {
     })
         .then(response => {
             if (!response.ok) {
+                currentLocation.innerHTML = 'Request failed'
                 throw new Error('Request failed');
             }
             return response.json();
@@ -139,15 +151,22 @@ function userSearch(city, state, country) {
                 console.log(location);
                 getWeather(lat, lon);
             } else {
-                console.log("No location found in response.")
+                currentLocation.innerHTML = 'No location found in response.'
+
             }
         })
-        .catch(error => console.error('Error: ', error));
+        .catch(error => {
+            if (error) {
+                currentLocation.innerHTML = 'Unable to get results for this location.';
+                console.error('Error:', error);
+            }
+        });
 }
 
 var submitButton = document.getElementById('submitButton');
 submitButton.addEventListener('click', function (event) {
     event.preventDefault();
+    currentLocation.innerHTML = 'LOADING......'
 
     var city = document.getElementById('city').value;
     var state = document.getElementById('state').value;
