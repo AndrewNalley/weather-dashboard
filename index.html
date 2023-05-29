@@ -13,31 +13,30 @@
 </head>
 
 <body class="container">
-    <header class="title bg-info text-white text-center p-3">Weather Dashboard</header>
+    <header class="title bg-info text-white text-center p-3 container-fluid">Weather Dashboard</header>
     <main id="main-container" class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <aside id="search">
-                    <h2>Enter a location</h2>
-                    <form id="locationForm">
-                        <label for="city">City:</label><br>
-                        <input type="text" id="city" name="city" value=""><br>
-                        <label for="state">State:</label><br>
-                        <input type="text" id="state" name="state" value=""><br>
-                        <label for="country">Country:</label><br>
-                        <input type="text" id="country" name="country" value=""><br>
-                        <input type="submit" id="submitButton" value="Submit">
-                    </form>
-                </aside>
-            </div>
-            <div id="card-container" class="container row">
-                <div id="current-day" class="col"></div>
-                <div id="day-1" class="col"></div>
-                <div id="day-2" class="col"></div>
-                <div id="day-3" class="col"></div>
-                <div id="day-4" class="col"></div>
-                <div id="day-5" class="col"></div>
-            </div>
+        <div id="search">
+            <header class="title d-flex justify-content-between p-3">
+            <h2>Enter a location</h2>
+            <h2 id="current-location">Current Location: </h2>
+            </header>
+            <form id="locationForm">
+                <label for="city">City:</label><br>
+                <input type="text" id="city" name="city" value=""><br>
+                <label for="state">State:</label><br>
+                <input type="text" id="state" name="state" value=""><br>
+                <label for="country">Country:</label><br>
+                <input type="text" id="country" name="country" value=""><br>
+                <input type="submit" id="submitButton" value="Submit">
+            </form>
+        </div>
+        <div id="card-container" class="container row">
+            <div id="current-day" class="col p-3"></div>
+            <div id="day-1" class="col p-3"></div>
+            <div id="day-2" class="col p-3"></div>
+            <div id="day-3" class="col p-3"></div>
+            <div id="day-4" class="col p-3"></div>
+            <div id="day-5" class="col p-3"></div>
         </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

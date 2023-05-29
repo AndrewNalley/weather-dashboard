@@ -69,6 +69,9 @@ https://getbootstrap.com/docs/4.0/components/card/
 Append:
 https://www.javascripttutorial.net/javascript-dom/javascript-append/
 
+Loading text: 
+https://codepen.io/alvarotrigo/pen/NWvQObB
+
 ## License
 
 The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
