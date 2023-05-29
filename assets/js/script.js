@@ -9,67 +9,12 @@ var day2 = document.querySelector('#day-2')
 var day3 = document.querySelector('#day-3')
 var day4 = document.querySelector('#day-4')
 var day5 = document.querySelector('#day-5')
-
-var allDaysArray = [currentDay, day1, day2, day3, day4, day5]
+cityName = document.querySelector('#city-name')
 
 // display search results
-function createCard(arr) {
-    // dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection]
-    // append to page
-    allDaysArray.forEach(function (day) {
-        var card = document.createElement('div');
-        card.id = day;
-        card.classList.add('card');
-        card.style.width = "18rem";
 
-        var cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title', 'text-center');
-        cardTitle.textContent = "Today's Weather";
-
-        var cardImg = document.createElement('img');
-        cardImg.classList.add('card-img-top');
-        //cardImg.src = 'https://openweathermap.org/img/wn/'+weatherIcon+'@2x.png';
-        //cardImg.alt = "Weather Card icon";
-
-        var cardBody = document.createElement('div');
-        cardBody.classList.add('card-body');
-
-        var cardText = document.createElement('p');
-        cardText.id = "weather-description";
-        cardText.classList.add('card-text');
-        cardText.textContent = "Some quick example text to build on the card title and make up the bulk of the card's content.";
-
-        var listGroup = document.createElement('ul');
-        listGroup.classList.add('list-group', 'list-group-flush');
-
-        var listItems = [
-            // arr.
-            "Temperature:" + arr[0],
-            "Feels like:"  + arr[1],
-            "Humidity:" + arr[2],
-            "Wind Speed:" + arr[3],
-            "Wind Direction:" + arr[4]
-        ];
-
-        listItems.forEach(function (itemText) {
-            var listItem = document.createElement('li');
-            listItem.classList.add('list-group-item');
-            listItem.textContent = itemText;
-            listGroup.appendChild(listItem);
-        });
-
-        card.appendChild(cardTitle);
-        card.appendChild(cardImg);
-        card.appendChild(cardBody);
-        cardBody.appendChild(cardText);
-        cardBody.appendChild(listGroup);
-
-        day.appendChild(card);
-    });
-}
-
-function getWeather(lat, lon) {
-    var weatherAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}`
+function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
+    var weatherAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}`;
     fetch(weatherAPI, {
         method: 'GET',
     })
@@ -77,54 +22,94 @@ function getWeather(lat, lon) {
             if (!response.ok) {
                 throw new Error('Request failed');
             }
-            return response.json()
+            return response.json();
         })
         .then(data => {
             if (data) {
-                // create function to get five day's data then have each day create it's own temp variables
-                console.log(data)
-                var cityName = data.city.name
-                // get current and 5 day forecast
+                console.log(data);
+                var cityName = '';
+                cityName.textContent = data.city.name;
                 var daysData = [
-                    data.list[0],
-                    data.list[1],
-                    data.list[2],
-                    data.list[3],
-                    data.list[4],
-                    data.list[5]
-                ]
-                var dayArray = []; // Array to store the created arrays
-                // var weatherDate;
+                    currentDayData = data.list[0],
+                    day1Data = data.list[1],
+                    day2Data = data.list[2],
+                    day3Data = data.list[3],
+                    day4Data = data.list[4],
+                    day5Data = data.list[5]
+                ];
+
                 var weatherIcon;
                 var temp;
                 var tempFeelsLike;
                 var humidity;
                 var windSpeed;
                 var windDirection;
+                var daysElements = [currentDay, day1, day2, day3, day4, day5]; // Array of day elements
 
-                daysData.forEach(function (dayData) {
-                    weatherDate = dayjs.unix(dayData.dt)
-                    // weatherIcon = dayData.weather[0].icon;
+                daysData.forEach(function (dayData, index) {
+                    weatherDate = dayjs.unix(dayData.dt);
                     temp = dayData.main.temp;
                     tempFeelsLike = dayData.main.feels_like;
                     humidity = dayData.main.humidity;
                     windSpeed = dayData.wind.speed;
                     windDirection = dayData.wind.deg;
 
-                    dayArray = [weatherDate, weatherIcon, temp, tempFeelsLike, humidity, windSpeed, windDirection];
-                    console.log(dayArray)
-                    createCard(dayArray)
+                    var card = document.createElement('div');
+                    card.classList.add('card');
+                    card.style.width = "18rem";
+
+                    var cardTitle = document.createElement('h5');
+                    cardTitle.classList.add('card-title', 'text-center');
+                    cardTitle.textContent = "Today's Weather";
+
+                    var cardImg = document.createElement('img');
+                    cardImg.classList.add('card-img-top');
+
+                    var cardBody = document.createElement('div');
+                    cardBody.classList.add('card-body');
+
+                    var cardText = document.createElement('p');
+                    cardText.id = "weather-description";
+                    cardText.classList.add('card-text');
+                    cardText.textContent = "Some quick example text to build on the card title and make up the bulk of the card's content.";
+
+                    var listGroup = document.createElement('ul');
+                    listGroup.classList.add('list-group', 'list-group-flush');
+
+                    var listItems = [
+                        "Temperature:" + temp,
+                        "Feels like:" + tempFeelsLike,
+                        "Humidity:" + humidity,
+                        "Wind Speed:" + windSpeed,
+                        "Wind Direction:" + windDirection
+                    ];
+
+                    listItems.forEach(function (itemText) {
+                        var listItem = document.createElement('li');
+                        listItem.classList.add('list-group-item');
+                        listItem.textContent = itemText;
+                        listGroup.appendChild(listItem);
+                    });
+
+                    card.appendChild(cardTitle);
+                    card.appendChild(cardImg);
+                    card.appendChild(cardBody);
+                    cardBody.appendChild(cardText);
+                    cardBody.appendChild(listGroup);
+
+                    daysElements[index].innerHTML = ''; // Clear existing content of the day element
+                    daysElements[index].appendChild(card); // Append the card to the day element
                 });
             } else {
-                console.log("No city found")
+                console.log("No city found");
             }
-            // display data in present and future sections on html page
-            // needs city name, date, weather condition icon, temp, humidity, wind speed
-            // Current, 5-day future
-            //search history (logged in local)
         })
         .catch((error) => console.log('Error: ', error));
 }
+// display data in present and future sections on HTML page
+// needs city name, date, weather condition icon, temp, humidity, wind speed
+// Current, 5-day future
+// search history (logged in local)
 // uses user-entered locations to get coordinates
 function userSearch(city, state, country) {
     var geocodeAPI = `https://api.api-ninjas.com/v1/geocoding?city=${city}`
