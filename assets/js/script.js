@@ -10,7 +10,7 @@ var day3 = document.querySelector('#day-3')
 var day4 = document.querySelector('#day-4')
 var day5 = document.querySelector('#day-5')
 cityName = document.querySelector('#city-name')
-var daysElements = [currentDay, day1, day2, day3, day4, day5]
+var daysElements = [currentDay, day1, day2, day3, day4, day5];
 
 // display search results
 
@@ -32,27 +32,25 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 cityName.textContent = data.city.name;
                 var daysData = [
                     data.list[0],
-                    data.list[1],
-                    data.list[2],
-                    data.list[3],
-                    data.list[4],
-                    data.list[5]
+                    data.list[8],
+                    data.list[16],
+                    data.list[24],
+                    data.list[32],
+                    data.list[39]
                 ];
-
+                var weatherDate;
                 var weatherIcon;
                 var temp;
                 var tempFeelsLike;
                 var humidity;
                 var windSpeed;
-                var windDirection;
 
                 daysData.forEach(function (dayData, index) {
-                    weatherDate = dayjs.unix(dayData.dt);
-                    temp = dayData.main.temp;
-                    tempFeelsLike = dayData.main.feels_like;
+                    weatherDate = dayjs.unix(dayData.dt).format('MM-DD')
+                    temp = dayData.main.temp - 273.15;
+                    tempFeelsLike = dayData.main.feels_like - 273.15;
                     humidity = dayData.main.humidity;
                     windSpeed = dayData.wind.speed;
-                    windDirection = dayData.wind.deg;
 
                     var card = document.createElement('div');
                     card.classList.add('card');
@@ -60,7 +58,7 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
 
                     var cardTitle = document.createElement('h5');
                     cardTitle.classList.add('card-title', 'text-center');
-                    cardTitle.textContent = "Today's Weather";
+                    cardTitle.textContent = weatherDate;
 
                     var cardImg = document.createElement('img');
                     cardImg.classList.add('card-img-top');
@@ -77,11 +75,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     listGroup.classList.add('list-group', 'list-group-flush');
 
                     var listItems = [
-                        "Temperature:" + temp,
-                        "Feels like:" + tempFeelsLike,
-                        "Humidity:" + humidity,
-                        "Wind Speed:" + windSpeed,
-                        "Wind Direction:" + windDirection
+                        "Temperature: " + temp.toFixed(1) + " C°",
+                        "Feels like: " + tempFeelsLike.toFixed(1) + " C°",
+                        "Humidity: " + humidity + "%",
+                        "Wind Speed: " + windSpeed + " km/h"
                     ];
 
                     listItems.forEach(function (itemText) {
