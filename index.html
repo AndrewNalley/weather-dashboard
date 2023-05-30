@@ -15,11 +15,11 @@
 <body class="bg-info">
     <header class="h1 title bg-info text-white max-width text-center p-3 container-fluid">Weekly Weather</header>
     <main id="main-container" class="container bg-info bg-light">
-        <div id="search">
-            <header class="title d-flex justify-content-between p-3">
-                <h2>Enter a location</h2>
-                <h2 id="current-location">Current Location: </h2>
-            </header>
+        <header class="title d-flex justify-content-between p-3">
+            <h2>Enter a location</h2>
+            <h2 id="current-location">Current Location: </h2>
+        </header>
+        <div id="search" class="container row justify-content-between">
             <form id="locationForm">
                 <label for="city">City:</label><br>
                 <input type="text" id="city" name="city" value=""><br>
@@ -29,6 +29,9 @@
                 <input type="text" id="country" name="country" value=""><br>
                 <input type="submit" id="submitButton" value="Submit">
             </form>
+            <ul id="search-history" class="h4">Search History
+                
+            </ul>
         </div>
         <div id="card-container" class="container row">
             <div id="current-day" class="col p-3 bg-info bg-light"></div>

@@ -3,6 +3,7 @@ var apiNinjaKey = 'c6zYH9j97tY8e4IyXXNHfA==TrC4jZ68YEo2FrrD'
 var cardContainer = document.querySelector('#card-container')
 var currentLocation = document.querySelector('#current-location')
 var search = document.querySelector('#search')
+var searchHistory = document.querySelector('#search-history')
 var current = document.querySelector('#current')
 var future = document.querySelector('#future')
 var currentDay = document.querySelector('#current-day')
@@ -18,9 +19,11 @@ var lastFiveSelections = localStorage.getItem('lastFiveSelections');
 if (lastFiveSelections) {
     var locationData = JSON.parse(lastFiveSelections);
     // Display the values on the page
-    console.log('Last five selections:', locationData.city, locationData.state, locationData.country);
+    var searches = document.createElement('li')
+    searches.classList.add('h6')
+    searches.textContent = locationData.city, locationData.state, locationData.country
+    searchHistory.appendChild(searches)
 }
-
 
 // display search results
 
