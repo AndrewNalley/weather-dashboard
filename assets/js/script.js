@@ -13,6 +13,14 @@ var day4 = document.querySelector('#day-4')
 var day5 = document.querySelector('#day-5')
 cityName = document.querySelector('#city-name')
 var daysElements = [currentDay, day1, day2, day3, day4, day5];
+// Retrieve data from local storage
+var lastFiveSelections = localStorage.getItem('lastFiveSelections');
+if (lastFiveSelections) {
+    var locationData = JSON.parse(lastFiveSelections);
+    // Display the values on the page
+    console.log('Last five selections:', locationData.city, locationData.state, locationData.country);
+}
+
 
 // display search results
 
@@ -54,7 +62,7 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                 var windSpeed;
 
                 daysData.forEach(function (dayData, index) {
-                    weatherDate = dayjs.unix(dayData.dt).format('MMM-D')
+                    weatherDate = dayjs.unix(dayData.dt).format('MMMM D')
                     weatherIcon = dayData.weather[0].icon
                     weatherDescription = dayData.weather[0].description
                     tempC = dayData.main.temp - 273.15;
@@ -66,7 +74,8 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
 
                     var card = document.createElement('div');
                     card.classList.add('card');
-                    card.style.width = "18rem";
+                    card.style.width = '18rem';
+                    card.style.backgroundColor = '#5bc0de';
 
                     var cardTitle = document.createElement('h5');
                     cardTitle.classList.add('card-title', 'text-center');
@@ -90,10 +99,10 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     listGroup.classList.add('list-group', 'list-group-flush');
 
                     var listItems = [
-                        "Temp: " + tempC.toFixed(1) + " C°, or " + tempF.toFixed(0) + " F°",
-                        "Feels like: " + tempFeelsLikeC.toFixed(1) + " C°, or " + tempFeelsLikeF.toFixed(0) + " F°",
+                        "Temp: " + tempC.toFixed(1) + " C° / " + tempF.toFixed(0) + " F°",
+                        "Feels like: " + tempFeelsLikeC.toFixed(1) + " C° / " + tempFeelsLikeF.toFixed(0) + " F°",
                         "Humidity: " + humidity + "%",
-                        "Wind Speed: " + windSpeed.toFixed(0) + " kph, or " + (windSpeed / 1.609).toFixed(0) + " mph"
+                        "Wind Speed: " + windSpeed.toFixed(0) + " kph / " + (windSpeed / 1.609).toFixed(0) + " mph"
                     ];
 
                     listItems.forEach(function (itemText) {
@@ -176,7 +185,13 @@ submitButton.addEventListener('click', function (event) {
     var state = document.getElementById('state').value;
     var country = document.getElementById('country').value;
     console.log('Submitted data:', city, state, country);
+    // Store values in local storage
+    var locationData = {
+        city: city,
+        state: state,
+        country: country
+    };
+    localStorage.setItem('lastFiveSelections', JSON.stringify(locationData));
 
     userSearch(city, state, country);
-
 });
