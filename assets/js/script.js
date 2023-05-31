@@ -15,16 +15,30 @@ var day5 = document.querySelector('#day-5')
 cityName = document.querySelector('#city-name')
 var daysElements = [currentDay, day1, day2, day3, day4, day5];
 // Retrieve data from local storage
-var lastFiveSelections = localStorage.getItem('lastFiveSelections');
-if (lastFiveSelections) {
-    var locationData = JSON.parse(lastFiveSelections);
-    // Display the values on the page
-    var searches = document.createElement('li')
-    searches.classList.add('h6')
-    searches.textContent = locationData.city, locationData.state, locationData.country
-    searchHistory.appendChild(searches)
-}
 
+var existingSearches = JSON.parse(localStorage.getItem('city-search'));
+var searchedItem;
+if (!Array.isArray(existingSearches)) {
+    existingSearches = [];
+}
+// Limit the array to five items
+if (existingSearches.length > 5) {
+    existingSearches.shift(); // Remove the oldest search
+}
+existingSearches.forEach(function (searched) {
+    searchedItem = document.createElement('li');
+    searchedItem.classList.add('h6', 'btn', 'btn-primary');
+    searchedItem.textContent = searched.city + ' ' + searched.state + ' ' + searched.country;
+    searchedItem.setAttribute('data-city', searched.city);
+    searchHistory.appendChild(searchedItem);
+});
+
+searchedItem.addEventListener('click', function () {
+    var city = this.getAttribute('data-city');
+    var state = this.getAttribute('data-state');
+    var country = this.getAttribute('data-country');
+    userSearch(city, state, country);
+});
 // display search results
 
 function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
@@ -69,9 +83,9 @@ function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
                     weatherIcon = dayData.weather[0].icon
                     weatherDescription = dayData.weather[0].description
                     tempC = dayData.main.temp - 273.15;
-                    tempF = (tempC * 9/5) + 32;
+                    tempF = (tempC * 9 / 5) + 32;
                     tempFeelsLikeC = dayData.main.feels_like - 273.15;
-                    tempFeelsLikeF = (tempFeelsLikeC * 9/5) + 32;
+                    tempFeelsLikeF = (tempFeelsLikeC * 9 / 5) + 32;
                     humidity = dayData.main.humidity;
                     windSpeed = dayData.wind.speed;
 
@@ -188,13 +202,17 @@ submitButton.addEventListener('click', function (event) {
     var state = document.getElementById('state').value;
     var country = document.getElementById('country').value;
     console.log('Submitted data:', city, state, country);
-    // Store values in local storage
-    var locationData = {
+
+    var newSearch = {
         city: city,
         state: state,
         country: country
     };
-    localStorage.setItem('lastFiveSelections', JSON.stringify(locationData));
+
+    existingSearches.push(newSearch);
+    localStorage.setItem('city-search', JSON.stringify(existingSearches));
+    searchHistory.innerHTML = ''; // Clear the search history before re-populating
 
     userSearch(city, state, country);
 });
+
