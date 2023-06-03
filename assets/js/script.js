@@ -21,9 +21,12 @@ function showHistory() {
     if (!Array.isArray(existingSearches)) {
         existingSearches = [];
     }
-    existingSearches.slice(0, 5).forEach(function (searched) {
-        var searchedItem;
-        searchedItem = document.createElement('li');
+    // Retrieve the five newest searches
+    // Retrieve the five newest searches
+    var newestSearches = existingSearches.slice(-5);
+
+    newestSearches.forEach(function (searched) {
+        var searchedItem = document.createElement('li');
         searchedItem.classList.add('h6', 'btn', 'btn-primary');
         searchedItem.textContent = searched.city + ' ' + searched.state + ' ' + searched.country;
         searchedItem.setAttribute('data-city', searched.city);
@@ -38,9 +41,14 @@ function showHistory() {
             var country = this.getAttribute('data-country');
             userSearch(city, state, country);
         });
+
         searchHistory.appendChild(searchedItem);
     });
+
+    // Update the local storage with the five newest searches
+    localStorage.setItem('city-search', JSON.stringify(newestSearches));
 }
+
 // display search results
 function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
     var weatherAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}`;
@@ -215,7 +223,7 @@ submitButton.addEventListener('click', function (event) {
     var existingSearches = JSON.parse(localStorage.getItem('city-search'));
     existingSearches.push(newSearch);
     localStorage.setItem('city-search', JSON.stringify(existingSearches));
-    
+
     userSearch(city, state, country);
     showHistory();
 });
