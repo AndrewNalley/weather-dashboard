@@ -1,65 +1,35 @@
-User Story
 
-AS A traveler
-
-I WANT to see the weather outlook for multiple cities
-
-SO THAT I can plan a trip accordingly
-
-Acceptance Criteria
-
-GIVEN a weather dashboard with form inputs
-
-WHEN I search for a city
-
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-
-WHEN I view current weather conditions for that city
-
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-
-WHEN I view future weather conditions for that city
-
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-
-WHEN I click on a city in the search history
-
-THEN I am again presented with current and future conditions for that city
-
-
-# <Your-Project-Title>
+# Weather-Dashboard
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
+I was motivated to make a simple and usable weather application, because so many weather websites these days are buggy, slow, and infested with ads. This website is not meant to be a all-encompassing information center, but rather it is meant to give the everyday user a quick update on what to expect for the day or weekend trip. 
 
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+Though the app works well, I am far enough along in my journey to see that there are better ways to display the data. The JavaScript does nearly everything, and it makes the app slower than it could be with a template like Handlebars.js. 
 
-## Table of Contents (Optional)
+The search function utilizes two APIs: A geocoding API that converts city, state, and country into coordinates, and a weather API that takes in the coordinates and returns all the data for that area. The page then displays the current day and five days into the future. 
 
-If your README is long, add a table of contents to make it easy for users to find what they need.
+## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
+- [Features](#features)
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+No Installation necessary, simply visit: https://andrewnalley.github.io/weather-dashboard/
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+The page is fairly easy to use. Simply enter the city or town in which you would like to know the future weather. Sometimes you may need to be specific if the city name is commonly used; enter the state and country if it can't find the location. 
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+You can click on a previously searched city at the right-hand side of the page. 
 
-
-    ![alt text](assets/images/screenshot.png)
-
+Screenshots:
+![Top of the Page](assets/images/top.png)
+![Card display](assets/images/cards.png)
 
 ## Credits
 
@@ -83,21 +53,31 @@ https://codepen.io/alvarotrigo/pen/NWvQObB
 
 ## License
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
+MIT License
 
----
+Copyright (c) 2023 Andrew Nalley
 
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ## Features
 
-If your project has a lot of features, list them here.
+- Utilizes local storage for search history
+- Uses Bootstrap for cards 
+- Requested search data gathered from APIs
 
-## How to Contribute
-
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
