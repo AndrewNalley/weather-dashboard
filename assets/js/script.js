@@ -15,32 +15,33 @@ var day5 = document.querySelector('#day-5')
 cityName = document.querySelector('#city-name')
 var daysElements = [currentDay, day1, day2, day3, day4, day5];
 // Retrieve data from local storage
+function showHistory() {
+    var existingSearches = JSON.parse(localStorage.getItem('city-search'));
+    searchHistory.innerHTML = '';
+    if (!Array.isArray(existingSearches)) {
+        existingSearches = [];
+    }
+    existingSearches.slice(0, 5).forEach(function (searched) {
+        var searchedItem;
+        searchedItem = document.createElement('li');
+        searchedItem.classList.add('h6', 'btn', 'btn-primary');
+        searchedItem.textContent = searched.city + ' ' + searched.state + ' ' + searched.country;
+        searchedItem.setAttribute('data-city', searched.city);
+        searchedItem.setAttribute('data-state', searched.state);
+        searchedItem.setAttribute('data-country', searched.country);
 
-var existingSearches = JSON.parse(localStorage.getItem('city-search'));
-var searchedItem;
-if (!Array.isArray(existingSearches)) {
-    existingSearches = [];
+        // Attach event listener to each list item
+        searchedItem.addEventListener('click', function () {
+            currentLocation.innerHTML = 'LOADING......';
+            var city = this.getAttribute('data-city');
+            var state = this.getAttribute('data-state');
+            var country = this.getAttribute('data-country');
+            userSearch(city, state, country);
+        });
+        searchHistory.appendChild(searchedItem);
+    });
 }
-// Limit the array to five items
-if (existingSearches.length > 5) {
-    existingSearches.shift(); // Remove the oldest search
-}
-existingSearches.forEach(function (searched) {
-    searchedItem = document.createElement('li');
-    searchedItem.classList.add('h6', 'btn', 'btn-primary');
-    searchedItem.textContent = searched.city + ' ' + searched.state + ' ' + searched.country;
-    searchedItem.setAttribute('data-city', searched.city);
-    searchHistory.appendChild(searchedItem);
-});
-
-searchedItem.addEventListener('click', function () {
-    var city = this.getAttribute('data-city');
-    var state = this.getAttribute('data-state');
-    var country = this.getAttribute('data-country');
-    userSearch(city, state, country);
-});
 // display search results
-
 function getWeather(lat, lon, currentDay, day1, day2, day3, day4, day5) {
     var weatherAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherKey}`;
     fetch(weatherAPI, {
@@ -193,6 +194,8 @@ function userSearch(city, state, country) {
         });
 }
 
+showHistory();
+
 var submitButton = document.getElementById('submitButton');
 submitButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -208,11 +211,12 @@ submitButton.addEventListener('click', function (event) {
         state: state,
         country: country
     };
-
+    searchHistory.innerHTML = ''; // Clear the search history before re-populating
+    var existingSearches = JSON.parse(localStorage.getItem('city-search'));
     existingSearches.push(newSearch);
     localStorage.setItem('city-search', JSON.stringify(existingSearches));
-    searchHistory.innerHTML = ''; // Clear the search history before re-populating
-
+    
     userSearch(city, state, country);
+    showHistory();
 });
 
